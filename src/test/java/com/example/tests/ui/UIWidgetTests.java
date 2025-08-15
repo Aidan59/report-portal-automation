@@ -1,8 +1,10 @@
 package com.example.tests.ui;
 
+import com.example.Config;
 import com.example.pages.DashboardPage;
 import com.example.pages.LoginPage;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.qameta.allure.*;
 import jdk.jfr.Description;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -15,10 +17,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.HashMap;
 import java.util.Map;
 
+@Epic("Dashboard UI")
+@Feature("Widget Creation")
 public class UIWidgetTests {
 
     private WebDriver driver;
-    private final String baseUrl = "https://demo.reportportal.io/ui/";
+    private String baseUrl = Config.getProperty("base.url");
 
     @BeforeEach
     void setup() {
@@ -41,21 +45,28 @@ public class UIWidgetTests {
     }
 
     @Test
-    @Description("Тест 1: Создание нового Widget типа Task Progress")
-    void testAddTaskProgressWidget() throws InterruptedException {
+    @Story("Создание Widget через UI")
+    @Description("Тест 1: Создание нового Widget")
+    @Severity(SeverityLevel.CRITICAL)
+    void testAddTaskProgressWidget() {
         LoginPage login = new LoginPage(driver);
         DashboardPage dashboard = new DashboardPage(driver);
 
-        login.open(baseUrl + "#login");
+        login.open(baseUrl + "ui/#login");
         login.login("default", "1q2w3e");
 
-        dashboard.openDashboard(baseUrl + "#default_personal/dashboard");
+
+        dashboard.openDashboard(baseUrl + "ui/#default_personal/dashboard");
 
         dashboard.clickAddDashboard("Test Dashboard");
 
         dashboard.clickAddWidget("Task Progress");
 
-        Assertions.assertTrue(dashboard.isWidgetPresent("Task Progress"), "Widget не найден на Dashboard");
+        Assertions.assertTrue(dashboard.isWidgetPresent("Task Progress"));
+
+        dashboard.deleteDashboard();
+
+        Assertions.assertFalse(dashboard.isWidgetPresent("Task Progress"));
     }
 
 }
