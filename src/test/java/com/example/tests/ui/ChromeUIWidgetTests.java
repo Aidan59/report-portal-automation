@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Epic("Dashboard UI")
 @Feature("Widget Creation")
-public class UIWidgetTests {
+public class ChromeUIWidgetTests {
 
     private WebDriver driver;
     private String baseUrl = Config.getProperty("base.url");
@@ -46,7 +46,7 @@ public class UIWidgetTests {
 
     @Test
     @Story("Создание Widget через UI")
-    @Description("Тест 1: Создание нового Widget")
+    @Description("Тест 1: Создание нового Widget через Chrome")
     @Severity(SeverityLevel.CRITICAL)
     void testAddTaskProgressWidget() {
         LoginPage login = new LoginPage(driver);

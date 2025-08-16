@@ -1,4 +1,4 @@
-package com.example.tests.ui;
+package com.example.tests.api;
 
 import com.example.Config;
 import io.qameta.allure.*;
